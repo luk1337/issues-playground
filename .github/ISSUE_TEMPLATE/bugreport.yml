@@ -64,7 +64,7 @@ body:
   - type: input
     id: mods
     attributes:
-      label: System Modifications (google apps, magisk, etc)
+      label: System Modifications
       placeholder: "google apps, magisk, etc"
 
   - type: textarea
