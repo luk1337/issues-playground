@@ -1,0 +1,31 @@
+name: Label issue
+
+on:
+  issues:
+    types: [opened, reopened]
+
+jobs:
+  label:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Parse issue body
+      id: issue-parser
+      uses: edumserrano/github-issue-forms-parser@51ff8940d0acaffc1848e0c55e9c0329220d8c38
+      with:
+        template-filepath: '.github/ISSUE_TEMPLATE/bugreport.yml'
+        issue-form-body: '${{ github.event.issue.body }}'
+
+    - name: Install PyGithub
+      run: pip install PyGithub
+
+    - name: Label issue
+      run: ./label.py
+      env:
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ISSUE_BODY: ${{ steps.issue-parser.outputs.parsed-issue }}
+        ISSUE_NUMBER: ${{ github.event.issue.number }}
