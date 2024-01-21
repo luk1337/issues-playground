@@ -54,15 +54,11 @@ body:
     id: baseband
     attributes:
       label: Baseband Version
-    validations:
-      required: true
 
   - type: input
     id: mods
     attributes:
       label: System Modifications (google apps, magisk, etc)
-    validations:
-      required: true
 
   - type: textarea
     id: expected
@@ -82,8 +78,6 @@ body:
     id: solution
     attributes:
       label: Possible Solution
-    validations:
-      required: true
 
   - type: textarea
     id: reproduce
