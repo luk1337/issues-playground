@@ -40,6 +40,7 @@ body:
     id: date
     attributes:
       label: Build Date
+      description: "Build date in YYYYMMDD format."
     validations:
       required: true
 
