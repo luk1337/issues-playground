@@ -11,30 +11,18 @@ from github import Auth, Github, GithubException
 
 @dataclass
 class IssueBody:
-    device: str
-    version: str
-    date: str
-    kernel: str
-    baseband: str
-    mods: str
-    expected: str
-    current: str
-    solution: str
-    reproduce: str
-    directions: str
-
     def __init__(self, issue_body: json):
-        self.device = issue_body['device']
-        self.version = issue_body['version']
-        self.date = issue_body['date']
-        self.kernel = issue_body['kernel']
-        self.baseband = issue_body['baseband']
-        self.mods = issue_body['mods']
-        self.expected = issue_body['expected']
-        self.current = issue_body['current']
-        self.solution = issue_body['solution']
-        self.reproduce = issue_body['reproduce']
-        self.directions = issue_body['directions']
+        self.device: str = issue_body['device']
+        self.version: str = issue_body['version']
+        self.date: str = issue_body['date']
+        self.kernel: str = issue_body['kernel']
+        self.baseband: str = issue_body['baseband']
+        self.mods: str = issue_body['mods']
+        self.expected: str = issue_body['expected']
+        self.current: str = issue_body['current']
+        self.solution: str = issue_body['solution']
+        self.reproduce: str = issue_body['reproduce']
+        self.directions: str = issue_body['directions']
 
         # Let's be friendly...
         if x := re.findall(r'^lineage-(\d+)\.(\d+)', self.version):
