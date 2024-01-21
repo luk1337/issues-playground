@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from json import JSONDecodeError
 
 import requests
+import yaml
 from github import Auth, Github, GithubException
 
 
@@ -52,6 +53,24 @@ def device_list() -> dict:
             ret[codename] = version
 
     return ret
+
+
+def device_maintainers(device: str) -> list:
+    if req := requests.get(
+            f'https://raw.githubusercontent.com/LineageOS/lineage_wiki/main/_data/devices/{device}.yml',
+            timeout=5,
+    ):
+        if req.status_code == 200:
+            return yaml.safe_load(req.text)['maintainers']
+
+    if req := requests.get(
+            f'https://raw.githubusercontent.com/LineageOS/lineage_wiki/main/_data/devices/{device}_variant1.yml',
+            timeout=5,
+    ):
+        if req.status_code == 200:
+            return yaml.safe_load(req.text)['maintainers']
+
+    return []
 
 
 def issue_errors(issue: IssueBody) -> list:
@@ -127,6 +146,11 @@ def main() -> None:
         with suppress(GithubException):
             repo.create_label(label, color)  # just in case
         issue.add_to_labels(repo.get_label(label))
+
+    # Assign maintainers if possible
+    for maintainer in device_maintainers(issue_body.device):
+        with suppress(GithubException):
+            issue.add_to_assignees(github.get_user(maintainer))
 
 
 if __name__ == '__main__':
