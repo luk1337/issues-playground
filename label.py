@@ -4,6 +4,7 @@ import os
 import re
 from contextlib import suppress
 from dataclasses import dataclass
+from json import JSONDecodeError
 
 import requests
 from github import Auth, Github, GithubException
@@ -90,7 +91,17 @@ def main() -> None:
         return
 
     # Parse issue body
-    issue_body = IssueBody(json.loads(os.environ.get('ISSUE_BODY')))
+    try:
+        issue_body = IssueBody(json.loads(os.environ.get('ISSUE_BODY')))
+    except JSONDecodeError:
+        issue.create_comment('\n'.join([
+            'Hi! It appears that your issue doesn\'t use the correct template.',
+            'Please create a new one and make sure to select "Bug Report" template.',
+            '',
+            '(this action was performed by a bot)',
+        ]))
+        issue.edit(state='closed')
+        return
 
     # Close issue if there are any errors
     if errors := issue_errors(issue_body):
