@@ -61,7 +61,7 @@ def issue_errors(issue: IssueBody) -> list:
 
     if issue.device not in devices:
         ret.append(
-            f'Device "{issue.device}" is not a valid device codename. Supported values are: {", ".join(devices.keys())}'
+            f'Device "{issue.device}" is not a valid device codename. Supported values are: {", ".join([f"`{device}`" for device in devices.keys()])}'
         )
 
     if device_version := devices.get(issue.device, None):
