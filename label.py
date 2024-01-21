@@ -56,17 +56,12 @@ def device_list() -> dict:
 
 
 def device_maintainers(device: str) -> list:
-    if req := requests.get(
-            f'https://raw.githubusercontent.com/LineageOS/lineage_wiki/main/_data/devices/{device}.yml',
-            timeout=5,
-    ):
-        if req.status_code == 200:
-            return yaml.safe_load(req.text)['maintainers']
+    for url in [
+        f'https://raw.githubusercontent.com/LineageOS/lineage_wiki/main/_data/devices/{device}.yml',
+        f'https://raw.githubusercontent.com/LineageOS/lineage_wiki/main/_data/devices/{device}_variant1.yml',
+    ]:
+        req = requests.get(url, timeout=5)
 
-    if req := requests.get(
-            f'https://raw.githubusercontent.com/LineageOS/lineage_wiki/main/_data/devices/{device}_variant1.yml',
-            timeout=5,
-    ):
         if req.status_code == 200:
             return yaml.safe_load(req.text)['maintainers']
 
