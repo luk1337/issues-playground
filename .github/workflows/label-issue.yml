@@ -19,8 +19,14 @@ jobs:
         template-filepath: '.github/ISSUE_TEMPLATE/bugreport.yml'
         issue-form-body: '${{ github.event.issue.body }}'
 
-    - name: Install PyGithub
-      run: pip install PyGithub
+    - name: Setup Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        cache: 'pip'
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
 
     - name: Label issue
       run: ./label.py
