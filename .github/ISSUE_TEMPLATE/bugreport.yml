@@ -25,6 +25,7 @@ body:
       label: Device
       description: |
         codename of the device you're using (ie: "mako", not "nexus 4")
+      placeholder: "mako"
     validations:
       required: true
 
@@ -33,6 +34,7 @@ body:
     attributes:
       label: "LineageOS Version"
       description: "'Latest' is not a valid answer, please write the exact version number."
+      placeholder: "lineage-20"
     validations:
       required: true
 
@@ -41,6 +43,7 @@ body:
     attributes:
       label: Build Date
       description: "Build date in YYYYMMDD format."
+      placeholder: "20230322"
     validations:
       required: true
 
@@ -48,6 +51,7 @@ body:
     id: kernel
     attributes:
       label: Kernel Version
+      placeholder: "4.19.261-ga3e87045cf37"
     validations:
       required: true
 
@@ -55,11 +59,13 @@ body:
     id: baseband
     attributes:
       label: Baseband Version
+      placeholder: "AT31c7-00087-0713_1634_23a2dce"
 
   - type: input
     id: mods
     attributes:
       label: System Modifications (google apps, magisk, etc)
+      placeholder: "google apps, magisk, etc"
 
   - type: textarea
     id: expected
